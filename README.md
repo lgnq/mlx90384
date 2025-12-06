@@ -32,17 +32,17 @@ This software package is a universal sensor driver package for Melexis's resolve
 
 - RT-Thread 4.0.0+
 - Sensor component
-- SPI driver: mlx90382 devices use SPI for data communication, and need system SPI driver support;
+- SPI driver: mlx90384 devices use SPI for data communication, and need system SPI driver support;
 
 ### Get the package
 
-To use the mlx90382 software package, you need to select it in the RT-Thread package management. The specific path is as follows:
+To use the mlx90384 software package, you need to select it in the RT-Thread package management. The specific path is as follows:
 
 ```
 RT-Thread online packages  --->
   peripheral libraries and drivers  --->
     sensors drivers  --->
-      mlx90382: Universal 3D magnetic sensor driver package.
+      mlx90384: Universal 3D magnetic sensor driver package.
               Version (latest)  --->
 ```
 
@@ -50,33 +50,33 @@ RT-Thread online packages  --->
 
 ### Using packages
 
-The initialization function of mlx90382 software package is as follows:
+The initialization function of mlx90384 software package is as follows:
 
 ```
-int rt_hw_mlx90382_init(const char *name, struct rt_sensor_config *cfg);
+int rt_hw_mlx90384_init(const char *name, struct rt_sensor_config *cfg);
 ```
 
 This function needs to be called by the user. The main functions of the function are:
 
 - Device configuration and initialization (configure interface devices and interrupt pins according to the incoming configuration information);
-- Register the corresponding sensor device and complete the registration of the mlx90382 device;
+- Register the corresponding sensor device and complete the registration of the mlx90384 device;
 
 #### Initialization example
 
 ```
-#include "sensor_melexis_mlx90382.h"
+#include "sensor_melexis_mlx90384.h"
 
-int rt_hw_mlx90382_port(void)
+int rt_hw_mlx90384_port(void)
 {
     struct rt_sensor_config cfg;
 
     cfg.intf.dev_name  = "spi10";
 
-    rt_hw_mlx90382_init("mps", &cfg);
+    rt_hw_mlx90384_init("mps", &cfg);
 
     return 0;
 }
-INIT_ENV_EXPORT(rt_hw_mlx90382_port);
+INIT_ENV_EXPORT(rt_hw_mlx90384_port);
 ```
 
 ```
@@ -151,13 +151,13 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
 }
 
 // 自动初始化实现SPI设备挂载
-int mlx90382_spi_device_init(void)
+int mlx90384_spi_device_init(void)
 {
     __HAL_RCC_GPIOA_CLK_ENABLE();
 
-    return rt_hw_spi_device_attach("spi1", "spi10", GPIOA, GPIO_PIN_8);    //EAF
+    return rt_hw_spi_device_attach("spi1", "spi10", GPIOA, GPIO_PIN_8);
 }
-INIT_DEVICE_EXPORT(mlx90382_spi_device_init);
+INIT_DEVICE_EXPORT(mlx90384_spi_device_init);
 ```
 
 ## Precautions
@@ -170,4 +170,4 @@ Maintenance man:
 
 - [Eamon Fang](https://github.com/lgnq) 
 
-- 主页：<https://github.com/lgnq/mlx90382>
+- 主页：<https://github.com/lgnq/mlx90384>
