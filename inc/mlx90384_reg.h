@@ -8,8 +8,8 @@
  * 2024-12-15     lgnq         the first version
  */
 
-#ifndef MLX90382_REG_H_
-#define MLX90382_REG_H_
+#ifndef __MLX90384_REG_H__
+#define __MLX90384_REG_H__
 
 #define MLX90382_CONFIG_REG                 0x100
 

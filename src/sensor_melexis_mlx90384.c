@@ -8,7 +8,7 @@
  * 2024-12-30     lgnq         the first version
  */
 
-#include <sensor_melexis_mlx90382.h>
+#include <sensor_melexis_mlx90384.h>
 
 #define DBG_TAG "sensor.mlx.mlx90384"
 #define DBG_LVL DBG_INFO

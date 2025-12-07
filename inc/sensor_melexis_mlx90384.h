@@ -8,11 +8,11 @@
  * 2025-01-04     lgnq         the first version
  */
 
-#ifndef SENSOR_MELEXIS_MLX90382_H__
-#define SENSOR_MELEXIS_MLX90382_H__
+#ifndef __SENSOR_MELEXIS_MLX90384_H__
+#define __SENSOR_MELEXIS_MLX90384_H__
 
-#include "sensor.h"
-#include <mlx90382.h>
+#include "drivers/sensor.h"
+#include <mlx90384.h>
 
 enum CMD
 {

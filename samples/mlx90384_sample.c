@@ -10,7 +10,7 @@
 
 #include <rtthread.h>
 #include <board.h>
-#include <mlx90382.h>
+#include <mlx90384.h>
 
 /* Default configuration, please change according to the actual situation, support SPI device name */
 #define MLX90382_DEVICE_NAME  "spi10"

@@ -18,8 +18,8 @@
 #define DBG_LVL DBG_INFO
 #include <rtdbg.h>
 
-#include <mlx90382.h>
-#include "mlx90382_reg.h"
+#include <mlx90384.h>
+#include "mlx90384_reg.h"
 
 #define MLX90382_SPI_MAX_SPEED (10000 * 1000)
 
