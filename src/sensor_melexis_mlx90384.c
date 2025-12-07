@@ -10,7 +10,7 @@
 
 #include <sensor_melexis_mlx90382.h>
 
-#define DBG_TAG "sensor.mlx.mlx90382"
+#define DBG_TAG "sensor.mlx.mlx90384"
 #define DBG_LVL DBG_INFO
 #include <rtdbg.h>
 

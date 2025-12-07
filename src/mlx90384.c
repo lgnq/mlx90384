@@ -14,7 +14,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#define DBG_TAG "mlx90382"
+#define DBG_TAG "mlx90384"
 #define DBG_LVL DBG_INFO
 #include <rtdbg.h>
 
