@@ -155,7 +155,20 @@ int mlx90384_spi_device_init(void)
 {
     __HAL_RCC_GPIOA_CLK_ENABLE();
 
-    return rt_hw_spi_device_attach("spi1", "spi10", GPIOA, GPIO_PIN_8);
+    return rt_hw_spi_device_attach("spi1", "spi10", GPIOA, GPIO_PIN_8); //RTT v4.x.x
+}
+INIT_DEVICE_EXPORT(mlx90384_spi_device_init);
+
+or 
+
+#define MLX90384_CS0_PIN  (GET_PIN(A, 3))
+#define MLX90384_CS1_PIN  (GET_PIN(A, 4))
+
+int mlx90384_spi_device_init(void)
+{
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+
+    return rt_hw_spi_device_attach("spi1", "spi10", MLX90384_CS0_PIN); //RTT v5.x.x
 }
 INIT_DEVICE_EXPORT(mlx90384_spi_device_init);
 ```
