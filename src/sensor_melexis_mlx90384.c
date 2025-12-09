@@ -14,11 +14,11 @@
 #define DBG_LVL DBG_INFO
 #include <rtdbg.h>
 
-#define mlx_dev ((struct mlx90382_device *)sensor->parent.user_data)
+#define mlx_dev ((struct mlx90384_device *)sensor->parent.user_data)
 
 rt_uint16_t sample_freq = 100;
 
-static rt_size_t mlx90382_fetch_data(struct rt_sensor_device *sensor, void *buf, rt_size_t len)
+static rt_size_t mlx90384_fetch_data(struct rt_sensor_device *sensor, void *buf, rt_size_t len)
 {
     RT_ASSERT(buf);
 
@@ -34,7 +34,7 @@ static rt_size_t mlx90382_fetch_data(struct rt_sensor_device *sensor, void *buf,
 //        return 0;
 }
 
-rt_err_t mlx90382_get_info(rt_sensor_t sensor)
+rt_err_t mlx90384_get_info(rt_sensor_t sensor)
 {
     rt_err_t result = RT_EOK;
 
@@ -46,7 +46,7 @@ rt_err_t mlx90382_get_info(rt_sensor_t sensor)
 
     if (mlx_dev == RT_NULL)
     {
-        rt_kprintf("Please probe mlx90382 first!\n");
+        rt_kprintf("Please probe mlx90384 first!\n");
         return -1;
     }
 
@@ -64,7 +64,7 @@ rt_err_t mlx90382_get_info(rt_sensor_t sensor)
     return result;
 }
 
-static rt_err_t mlx90382_control(struct rt_sensor_device *sensor, int cmd, void *args)
+static rt_err_t mlx90384_control(struct rt_sensor_device *sensor, int cmd, void *args)
 {
     rt_err_t result = RT_EOK;
 
@@ -83,7 +83,7 @@ static rt_err_t mlx90382_control(struct rt_sensor_device *sensor, int cmd, void 
     case RT_SENSOR_CTRL_SET_POWER:
         break;
     case RT_SENSOR_CTRL_USER_CMD_INFO:
-        result = mlx90382_get_info(sensor);
+        result = mlx90384_get_info(sensor);
         break;
     case RT_SENSOR_CTRL_USER_CMD_LIN_PHASE:
         result = mlx90384_get_lin_phase(mlx_dev, (float *)args);
@@ -113,7 +113,7 @@ static rt_err_t mlx90382_control(struct rt_sensor_device *sensor, int cmd, void 
         result = mlx90384_set_sensing_mode(mlx_dev, *(rt_uint16_t *)args);
         break;
     default:
-        rt_kprintf("unknown MLX90382 CTRL CMD\r\n");
+        rt_kprintf("unknown MLX90384 CTRL CMD\r\n");
         return -RT_ERROR;
     }
 
@@ -122,8 +122,8 @@ static rt_err_t mlx90382_control(struct rt_sensor_device *sensor, int cmd, void 
 
 static struct rt_sensor_ops sensor_ops =
 {
-    mlx90382_fetch_data,
-    mlx90382_control
+    mlx90384_fetch_data,
+    mlx90384_control
 };
 
 int rt_hw_mlx90384_init(const char *name, struct rt_sensor_config *cfg)
@@ -136,7 +136,7 @@ int rt_hw_mlx90384_init(const char *name, struct rt_sensor_config *cfg)
 
     if (mlx_dev_temp == RT_NULL)
     {
-        LOG_E("mlx90382 init err!");
+        LOG_E("mlx90384 init err!");
         goto __exit;
     }
 
@@ -147,7 +147,7 @@ int rt_hw_mlx90384_init(const char *name, struct rt_sensor_config *cfg)
 
         sensor_mag->info.type       = RT_SENSOR_CLASS_MAG;
         sensor_mag->info.vendor     = RT_SENSOR_VENDOR_MELEXIS;
-        sensor_mag->info.model      = "mlx90382_mag";
+        sensor_mag->info.model      = "mlx90384_mag";
         sensor_mag->info.unit       = RT_SENSOR_UNIT_MGAUSS;
         sensor_mag->info.intf_type  = RT_SENSOR_INTF_SPI;
         sensor_mag->info.range_max  = 49120;
@@ -282,7 +282,7 @@ rt_err_t mlx90382_measurement_onoff(int argc, char **argv)
 
     if (!strcmp(argv[1], "on"))
     {
-        mlx90384_thread = rt_thread_create("mlx90382", read_mps_entry, "mag_mps", 1024, RT_THREAD_PRIORITY_MAX / 2, 20);
+        mlx90384_thread = rt_thread_create("mlx90384", read_mps_entry, "mag_mps", 1024, RT_THREAD_PRIORITY_MAX / 2, 20);
         if (mlx90384_thread != RT_NULL)
         {
             rt_thread_startup(mlx90384_thread);
@@ -292,7 +292,7 @@ rt_err_t mlx90382_measurement_onoff(int argc, char **argv)
     }
     else if (!strcmp(argv[1], "off"))
     {
-        mlx90384_thread = rt_thread_find("mlx90382");
+        mlx90384_thread = rt_thread_find("mlx90384");
 
         if (mlx90384_thread != RT_NULL)
         {
@@ -305,7 +305,7 @@ rt_err_t mlx90382_measurement_onoff(int argc, char **argv)
     return -1;
 }
 
-rt_err_t mlx90382_set_sample_freq(int argc, char **argv)
+rt_err_t mlx90384_set_sample_freq(int argc, char **argv)
 {
     rt_size_t res = RT_EOK;
 
@@ -315,7 +315,7 @@ rt_err_t mlx90382_set_sample_freq(int argc, char **argv)
     return res;
 }
 
-rt_err_t mlx90382_ops_ctrl(int argc, char **argv)
+rt_err_t mlx90384_ops_ctrl(int argc, char **argv)
 {
     rt_size_t res = RT_EOK;
     rt_device_t dev = RT_NULL;
@@ -353,7 +353,7 @@ rt_err_t mlx90382_ops_ctrl(int argc, char **argv)
 }
 
 #ifdef FINSH_USING_MSH
-    MSH_CMD_EXPORT(mlx90382_measurement_onoff, mlx90382 sensor function);
-    MSH_CMD_EXPORT(mlx90382_set_sample_freq, mlx90382 sensor function);
-    MSH_CMD_EXPORT(mlx90382_ops_ctrl, mlx90382 sensor function);
+    MSH_CMD_EXPORT(mlx90384_measurement_onoff, mlx90384 sensor function);
+    MSH_CMD_EXPORT(mlx90384_set_sample_freq, mlx90384 sensor function);
+    MSH_CMD_EXPORT(mlx90384_ops_ctrl, mlx90384 sensor function);
 #endif
