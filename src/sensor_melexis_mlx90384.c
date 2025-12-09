@@ -278,25 +278,25 @@ INIT_ENV_EXPORT(rt_hw_mlx90384_port);
 
 rt_err_t mlx90382_measurement_onoff(int argc, char **argv)
 {
-    rt_thread_t mlx90382_thread;
+    rt_thread_t mlx90384_thread;
 
     if (!strcmp(argv[1], "on"))
     {
-        mlx90382_thread = rt_thread_create("mlx90382", read_mps_entry, "mag_mps", 1024, RT_THREAD_PRIORITY_MAX / 2, 20);
-        if (mlx90382_thread != RT_NULL)
+        mlx90384_thread = rt_thread_create("mlx90382", read_mps_entry, "mag_mps", 1024, RT_THREAD_PRIORITY_MAX / 2, 20);
+        if (mlx90384_thread != RT_NULL)
         {
-            rt_thread_startup(mlx90382_thread);
+            rt_thread_startup(mlx90384_thread);
 
             return 0;
         }
     }
     else if (!strcmp(argv[1], "off"))
     {
-        mlx90382_thread = rt_thread_find("mlx90382");
+        mlx90384_thread = rt_thread_find("mlx90382");
 
-        if (mlx90382_thread != RT_NULL)
+        if (mlx90384_thread != RT_NULL)
         {
-            rt_thread_delete(mlx90382_thread);
+            rt_thread_delete(mlx90384_thread);
 
             return 0;
         }
