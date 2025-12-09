@@ -28,6 +28,6 @@ enum CMD
     RT_SENSOR_CTRL_USER_CMD_SET_SENSING_MODE,
 };
 
-int rt_hw_mlx90382_init(const char *name, struct rt_sensor_config *cfg);
+int rt_hw_mlx90384_init(const char *name, struct rt_sensor_config *cfg);
 
 #endif

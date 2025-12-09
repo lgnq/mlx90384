@@ -126,7 +126,7 @@ static struct rt_sensor_ops sensor_ops =
     mlx90382_control
 };
 
-int rt_hw_mlx90382_init(const char *name, struct rt_sensor_config *cfg)
+int rt_hw_mlx90384_init(const char *name, struct rt_sensor_config *cfg)
 {
     rt_int8_t result;
     struct mlx90382_device *mlx_dev_temp;
@@ -264,17 +264,17 @@ static void read_mps_entry(void *parameter)
     }
 }
 
-int rt_hw_mlx90382_port(void)
+int rt_hw_mlx90384_port(void)
 {
     struct rt_sensor_config cfg;
 
     cfg.intf.dev_name  = "spi10";
 
-    rt_hw_mlx90382_init("mps", &cfg);
+    rt_hw_mlx90384_init("mps", &cfg);
 
     return 0;
 }
-INIT_ENV_EXPORT(rt_hw_mlx90382_port);
+INIT_ENV_EXPORT(rt_hw_mlx90384_port);
 
 rt_err_t mlx90382_measurement_onoff(int argc, char **argv)
 {
