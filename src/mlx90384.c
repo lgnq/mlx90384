@@ -23,7 +23,7 @@
 
 #define MLX90382_SPI_MAX_SPEED (10000 * 1000)
 
-static rt_err_t mlx90382_register_write(struct mlx90384_device *dev, rt_uint16_t reg, rt_uint16_t data)
+static rt_err_t mlx90384_register_write(struct mlx90384_device *dev, rt_uint16_t reg, rt_uint16_t data)
 {
     rt_int8_t res = 0;
 
@@ -76,7 +76,7 @@ static rt_err_t mlx90382_register_write(struct mlx90384_device *dev, rt_uint16_t
     return res;
 }
 
-static rt_err_t mlx90382_register_read(struct mlx90384_device *dev, rt_uint16_t reg, rt_uint8_t len, rt_uint8_t *buf)
+static rt_err_t mlx90384_register_read(struct mlx90384_device *dev, rt_uint16_t reg, rt_uint8_t len, rt_uint8_t *buf)
 {
     rt_int8_t res = 0;
 
@@ -114,7 +114,7 @@ static rt_err_t mlx90382_register_read(struct mlx90384_device *dev, rt_uint16_t 
     return res;
 }
 
-static rt_err_t mlx90382_frame_read(struct mlx90384_device *dev, rt_uint16_t reg, rt_uint8_t len, rt_uint8_t *buf)
+static rt_err_t mlx90384_frame_read(struct mlx90384_device *dev, rt_uint16_t reg, rt_uint8_t len, rt_uint8_t *buf)
 {
     rt_int8_t res = 0;
 
@@ -156,36 +156,36 @@ rt_err_t mlx90384_soft_reset(struct mlx90384_device *dev)
 {
     rt_err_t res=0;
 
-    res = mlx90382_register_write(dev, MLX90382_SOFT_RESET, 1);
+    res = mlx90384_register_write(dev, MLX90382_SOFT_RESET, 1);
 
     return res;
 }
 
-rt_err_t mlx90382_set_gpio_if(struct mlx90384_device *dev, rt_uint8_t val)
+rt_err_t mlx90384_set_gpio_if(struct mlx90384_device *dev, rt_uint8_t val)
 {
     rt_err_t res=0;
     rt_uint8_t buf[4];
 
     union mlx90384_config_reg reg;
 
-    mlx90382_register_read(dev, MLX90384_CONFIG_REG, 4, buf);
+    mlx90384_register_read(dev, MLX90384_CONFIG_REG, 4, buf);
 
     reg.word_val = (buf[2]<<8) + buf[3];
 
     reg.gpio_if = val;
 
-    res = mlx90382_register_write(dev, MLX90384_CONFIG_REG, reg.word_val);
+    res = mlx90384_register_write(dev, MLX90384_CONFIG_REG, reg.word_val);
 
     return res;
 }
 
-rt_err_t mlx90382_set_current_zero_angle(struct mlx90384_device *dev)
+rt_err_t mlx90384_set_current_zero_angle(struct mlx90384_device *dev)
 {
     rt_err_t res=0;
     float angle;
     rt_uint8_t buf[4];
 
-    res = mlx90382_register_read(dev, MLX90382_LIN_PHASE, 4, buf);
+    res = mlx90384_register_read(dev, MLX90384_LIN_PHASE, 4, buf);
     if (res != RT_EOK)
     {
         return res;
@@ -194,7 +194,7 @@ rt_err_t mlx90382_set_current_zero_angle(struct mlx90384_device *dev)
     angle = ((buf[2] << 8) + buf[3]);
     angle = angle * 360 / 0x10000;
 
-    res = mlx90382_register_write(dev, MLX90382_PHASE_OFS, angle);
+    res = mlx90384_register_write(dev, MLX90384_PHASE_OFS, angle);
 
     return res;
 }
@@ -203,11 +203,11 @@ rt_err_t mlx90384_set_zero_position(struct mlx90384_device *dev, rt_uint16_t pos
 {
     rt_err_t res = 0;
 
-    res = mlx90382_register_write(dev, MLX90382_PHASE_OFS, position);
+    res = mlx90384_register_write(dev, MLX90384_PHASE_OFS, position);
 
     if (res != RT_EOK)
     {
-        rt_kprintf("mlx90382_set_zero_position is failed\r\n");
+        rt_kprintf("mlx90384_set_zero_position is failed\r\n");
     }
 
     return res;
@@ -220,13 +220,13 @@ rt_err_t mlx90384_set_sensing_mode(struct mlx90384_device *dev, rt_uint16_t mode
 
     union mlx90384_config_reg reg;
 
-    mlx90382_register_read(dev, MLX90384_CONFIG_REG, 4, buf);
+    mlx90384_register_read(dev, MLX90384_CONFIG_REG, 4, buf);
 
     reg.word_val = (buf[2]<<8) + buf[3];
 
     reg.sensing_mode = mode;
 
-    res = mlx90382_register_write(dev, MLX90384_CONFIG_REG, reg.word_val);
+    res = mlx90384_register_write(dev, MLX90384_CONFIG_REG, reg.word_val);
 
     return res;
 }
@@ -236,10 +236,10 @@ rt_err_t mlx90384_get_zero_position(struct mlx90384_device *dev, rt_uint16_t *po
     rt_err_t res = 0;
     rt_uint8_t buf[4];
 
-    res = mlx90382_register_read(dev, MLX90382_PHASE_OFS, 4, buf);
+    res = mlx90384_register_read(dev, MLX90384_PHASE_OFS, 4, buf);
     if (res != RT_EOK)
     {
-        rt_kprintf("mlx90382_get_zero_position is failed\r\n");
+        rt_kprintf("mlx90384_get_zero_position is failed\r\n");
         return res;
     }
 
@@ -253,7 +253,7 @@ rt_err_t mlx90384_get_config(struct mlx90384_device *dev, union mlx90384_config_
     rt_err_t res = 0;
     rt_uint8_t buf[4];
 
-    res = mlx90382_register_read(dev, MLX90384_CONFIG_REG, 4, buf);
+    res = mlx90384_register_read(dev, MLX90384_CONFIG_REG, 4, buf);
     if (res != RT_EOK)
     {
         return res;
@@ -269,7 +269,7 @@ rt_err_t mlx90384_get_lin_phase(struct mlx90384_device *dev, float *angle)
     rt_err_t res = 0;
     rt_uint8_t buf[4];
 
-    res = mlx90382_register_read(dev, MLX90382_LIN_PHASE, 4, buf);
+    res = mlx90384_register_read(dev, MLX90384_LIN_PHASE, 4, buf);
     if (res != RT_EOK)
     {
         return res;
@@ -290,7 +290,7 @@ rt_err_t mlx90384_get_driftc_phase(struct mlx90384_device *dev, float *angle)
     rt_err_t res = 0;
     rt_uint8_t buf[4];
 
-    res = mlx90382_register_read(dev, MLX90382_DRIFTC_PHASE, 4, buf);
+    res = mlx90384_register_read(dev, MLX90384_DRIFTC_PHASE, 4, buf);
     if (res != RT_EOK)
     {
         return res;
@@ -307,7 +307,7 @@ rt_err_t mlx90384_get_sc_phase(struct mlx90384_device *dev, float *pos)
     rt_err_t res = 0;
     rt_uint8_t buf[4];
 
-    res = mlx90382_register_read(dev, MLX90382_SC_PHASE, 4, buf);
+    res = mlx90384_register_read(dev, MLX90384_SC_PHASE, 4, buf);
     if (res != RT_EOK)
     {
         return res;
@@ -332,7 +332,7 @@ rt_err_t mlx90384_get_temp(struct mlx90384_device *dev, float *temp)
     rt_err_t res = 0;
     rt_uint8_t buf[4];
 
-    res = mlx90382_register_read(dev, MLX90382_TEMP, 4, buf);
+    res = mlx90384_register_read(dev, MLX90384_TEMP, 4, buf);
     if (res != RT_EOK)
     {
         return res;
@@ -350,7 +350,7 @@ rt_err_t mlx90384_get_speed(struct mlx90384_device *dev, rt_int16_t *speed)
     rt_err_t res = 0;
     rt_uint8_t buf[4];
 
-    res = mlx90382_register_read(dev, MLX90382_SPEED, 4, buf);
+    res = mlx90384_register_read(dev, MLX90384_SPEED, 4, buf);
     if (res != RT_EOK)
     {
         return res;
@@ -368,7 +368,7 @@ rt_err_t mlx90384_get_analog_version(struct mlx90384_device *dev, rt_uint16_t *v
     rt_err_t res = 0;
     rt_uint8_t buf[4];
 
-    res = mlx90382_register_read(dev, MLX90382_ANA_VERSION, 4, buf);
+    res = mlx90384_register_read(dev, MLX90384_ANA_VERSION, 4, buf);
     if (res != RT_EOK)
     {
         return res;
@@ -384,7 +384,7 @@ rt_err_t mlx90384_get_digital_version(struct mlx90384_device *dev, rt_uint16_t *
     rt_err_t res = 0;
     rt_uint8_t buf[4];
 
-    res = mlx90382_register_read(dev, MLX90382_DIG_VERSION, 4, buf);
+    res = mlx90384_register_read(dev, MLX90384_DIG_VERSION, 4, buf);
     if (res != RT_EOK)
     {
         return res;
@@ -396,7 +396,7 @@ rt_err_t mlx90384_get_digital_version(struct mlx90384_device *dev, rt_uint16_t *
 }
 
 /**
- * This function initialize the mlx90382 device.
+ * This function initialize the mlx90384 device.
  *
  * @param dev_name the name of transfer device
  * @param param the i2c device address for i2c communication, RT_NULL for SPI
@@ -414,7 +414,7 @@ struct mlx90384_device *mlx90384_init(const char *dev_name, rt_uint8_t param)
     dev = rt_calloc(1, sizeof(struct mlx90384_device));
     if (dev == RT_NULL)
     {
-        LOG_E("Can't allocate memory for mlx90382 device on '%s' ", dev_name);
+        LOG_E("Can't allocate memory for mlx90384 device on '%s' ", dev_name);
         goto __exit;
     }
 
@@ -431,7 +431,7 @@ struct mlx90384_device *mlx90384_init(const char *dev_name, rt_uint8_t param)
 
         cfg.data_width = 8;
         cfg.mode       = RT_SPI_MASTER | RT_SPI_MODE_2 | RT_SPI_MSB;  //RT_SPI_MODE_1 is not work well
-        cfg.max_hz     = MLX90382_SPI_MAX_SPEED; /* Set SPI max speed */
+        cfg.max_hz     = MLX90384_SPI_MAX_SPEED; /* Set SPI max speed */
 
         rt_spi_configure((struct rt_spi_device *)dev->bus, &cfg);
     }
@@ -442,9 +442,9 @@ struct mlx90384_device *mlx90384_init(const char *dev_name, rt_uint8_t param)
     }
 
     // set GPIO_IF as SPI bus mode
-    mlx90382_set_gpio_if(dev, 2);
+    mlx90384_set_gpio_if(dev, 2);
 
-    if (mlx90382_register_read(dev, MLX90384_CONFIG_REG, 4, reg) != RT_EOK)
+    if (mlx90384_register_read(dev, MLX90384_CONFIG_REG, 4, reg) != RT_EOK)
     {
         LOG_E("Failed to read device id!");
         goto __exit;
@@ -455,25 +455,25 @@ struct mlx90384_device *mlx90384_init(const char *dev_name, rt_uint8_t param)
     }
 
 #if 1
-    if (mlx90382_register_read(dev, 0xEE, 4, reg) == RT_EOK)
+    if (mlx90384_register_read(dev, 0xEE, 4, reg) == RT_EOK)
     {
         LOG_W("REG[0xEE]: 0x%x 0x%x 0x%x 0x%x, Analog Version is 0x%x Digital Version(8LSB) is 0x%x", reg[0], reg[1], reg[2], reg[3], reg[2], reg[3]);
 
         LOG_W("chipversion:%x", reg[2]);
     }
 
-    if (mlx90382_register_read(dev, 0xF0, 4, reg) == RT_EOK)
+    if (mlx90384_register_read(dev, 0xF0, 4, reg) == RT_EOK)
     {
         LOG_W("REG[0xF0]: 0x%x 0x%x 0x%x 0x%x, Digital Version(16MSB) is 0x%02x%02x", reg[0], reg[1], reg[2], reg[3], reg[2], reg[3]);
     }
 
-    if (mlx90382_register_write(dev, 0x13E, 0xBEEF) != RT_EOK)
+    if (mlx90384_register_write(dev, 0x13E, 0xBEEF) != RT_EOK)
     {
         LOG_E("Failed to write device register!");
         goto __exit;
     }
 
-    if (mlx90382_register_read(dev, 0x13E, 4, reg) == RT_EOK)
+    if (mlx90384_register_read(dev, 0x13E, 4, reg) == RT_EOK)
     {
         LOG_W("REG[0x13E]: 0x%x 0x%x 0x%x 0x%x", reg[0], reg[1], reg[2], reg[3]);
     }
@@ -519,7 +519,7 @@ void mlx90384_deinit(struct mlx90384_device *dev)
     rt_free(dev);
 }
 
-static void mlx90382(int argc, char **argv)
+static void mlx90384(int argc, char **argv)
 {
     static struct mlx90384_device *dev = RT_NULL;
 
@@ -527,11 +527,11 @@ static void mlx90382(int argc, char **argv)
     if (argc < 2)
     {
         rt_kprintf("\n");
-        rt_kprintf("mlx90382 [OPTION] [PARAM]\n");
+        rt_kprintf("mlx90384 [OPTION] [PARAM]\n");
         rt_kprintf("         probe <dev_name>      Probe mlx90382 by given name, default is spi10\n");
-        rt_kprintf("         angle [num]           read angle [num] times mlx90382\n");
+        rt_kprintf("         angle [num]           read angle [num] times mlx90384\n");
         rt_kprintf("                               num default 5\n");
-        rt_kprintf("         temp                  read temp mlx90382\n");
+        rt_kprintf("         temp                  read temp mlx90384\n");
 
         return ;
     }
@@ -556,7 +556,7 @@ static void mlx90382(int argc, char **argv)
 
         if (dev == RT_NULL)
         {
-            rt_kprintf("Please probe mlx90382 first!\n");
+            rt_kprintf("Please probe mlx90384 first!\n");
             return ;
         }
 
@@ -586,7 +586,7 @@ static void mlx90382(int argc, char **argv)
 
         if (dev == RT_NULL)
         {
-            rt_kprintf("Please probe mlx90382 first!\n");
+            rt_kprintf("Please probe mlx90384 first!\n");
             return ;
         }
 
@@ -599,7 +599,7 @@ static void mlx90382(int argc, char **argv)
 
         if (dev == RT_NULL)
         {
-            rt_kprintf("Please probe mlx90382 first!\n");
+            rt_kprintf("Please probe mlx90384 first!\n");
             return ;
         }
         mlx90384_get_config(dev, &config);
@@ -608,10 +608,10 @@ static void mlx90382(int argc, char **argv)
     }
     else
     {
-        rt_kprintf("Unknown command, please enter 'mlx90382' get help information!\n");
+        rt_kprintf("Unknown command, please enter 'mlx90384' get help information!\n");
     }
 }
 #ifdef FINSH_USING_MSH
-    MSH_CMD_EXPORT(mlx90382, mlx90382 sensor function);
+    MSH_CMD_EXPORT(mlx90384, mlx90384 sensor function);
 #endif
 
