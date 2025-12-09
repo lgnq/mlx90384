@@ -11,7 +11,8 @@
 #ifndef __MLX90384_REG_H__
 #define __MLX90384_REG_H__
 
-#define MLX90382_CONFIG_REG                 0x100
+#define MLX90384_NVRAM_BASE_ADDR            0x100
+#define MLX90384_CONFIG_REG                 (MLX90384_NVRAM_BASE_ADDR + 0x0)
 
 #define MLX90382_SOFT_RESET                 0x004
 #define MLX90382_TEMP                       0x03C
