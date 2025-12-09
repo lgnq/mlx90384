@@ -28,7 +28,7 @@ static rt_size_t mlx90384_fetch_data(struct rt_sensor_device *sensor, void *buf,
 
 //    if (sensor->config.mode == RT_SENSOR_MODE_POLLING)
 //    {
-//        return mlx90382_get_angular(mlx_dev, buf);
+//        return mlx90384_get_angular(mlx_dev, buf);
 //    }
 //    else
 //        return 0;
@@ -276,7 +276,7 @@ int rt_hw_mlx90384_port(void)
 }
 INIT_ENV_EXPORT(rt_hw_mlx90384_port);
 
-rt_err_t mlx90382_measurement_onoff(int argc, char **argv)
+rt_err_t mlx90384_measurement_onoff(int argc, char **argv)
 {
     rt_thread_t mlx90384_thread;
 

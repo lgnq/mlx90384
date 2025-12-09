@@ -21,7 +21,7 @@
 #include <mlx90384.h>
 #include "mlx90384_reg.h"
 
-#define MLX90382_SPI_MAX_SPEED (10000 * 1000)
+#define MLX90384_SPI_MAX_SPEED (10000 * 1000)
 
 static rt_err_t mlx90384_register_write(struct mlx90384_device *dev, rt_uint16_t reg, rt_uint16_t data)
 {
@@ -156,7 +156,7 @@ rt_err_t mlx90384_soft_reset(struct mlx90384_device *dev)
 {
     rt_err_t res=0;
 
-    res = mlx90384_register_write(dev, MLX90382_SOFT_RESET, 1);
+    res = mlx90384_register_write(dev, MLX90384_SOFT_RESET, 1);
 
     return res;
 }
@@ -528,7 +528,7 @@ static void mlx90384(int argc, char **argv)
     {
         rt_kprintf("\n");
         rt_kprintf("mlx90384 [OPTION] [PARAM]\n");
-        rt_kprintf("         probe <dev_name>      Probe mlx90382 by given name, default is spi10\n");
+        rt_kprintf("         probe <dev_name>      Probe mlx90384 by given name, default is spi10\n");
         rt_kprintf("         angle [num]           read angle [num] times mlx90384\n");
         rt_kprintf("                               num default 5\n");
         rt_kprintf("         temp                  read temp mlx90384\n");
