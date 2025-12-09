@@ -14,7 +14,7 @@
 #include <rtthread.h>
 #include <stdint.h>
 
-union mlx90382_config_reg
+union mlx90384_config_reg
 {
     rt_uint16_t word_val;
 
@@ -28,20 +28,20 @@ union mlx90382_config_reg
     };
 };
 
-/* mlx90382 config structure */
-struct mlx90382_config
+/* mlx90384 config structure */
+struct mlx90384_config
 {
     rt_uint16_t accel_range;
     rt_uint16_t gyro_range;
 };
 
-/* mlx90382 device structure */
-struct mlx90382_device
+/* mlx90384 device structure */
+struct mlx90384_device
 {
     rt_device_t bus;
     rt_uint16_t id;
     rt_uint8_t i2c_addr;
-    struct mlx90382_config config;
+    struct mlx90384_config config;
 };
 
 /**
@@ -52,23 +52,23 @@ struct mlx90382_device
  *
  * @return the pointer of device driver structure, RT_NULL represents initialization failed.
  */
-struct mlx90382_device *mlx90382_init(const char *dev_name, rt_uint8_t param);
+struct mlx90384_device *mlx90384_init(const char *dev_name, rt_uint8_t param);
 
 /**
  * This function releases memory
  *
  * @param dev the pointer of device driver structure
  */
-void mlx90382_deinit(struct mlx90382_device *dev);
+void mlx90384_deinit(struct mlx90384_device *dev);
 
-rt_err_t mlx90382_soft_reset(struct mlx90382_device *dev);
-rt_err_t mlx90382_get_config(struct mlx90382_device *dev, union mlx90382_config_reg *config);
-rt_err_t mlx90382_set_sensing_mode(struct mlx90382_device *dev, rt_uint16_t mode);
-rt_err_t mlx90382_get_lin_phase(struct mlx90382_device *dev, float *angle);
-rt_err_t mlx90382_get_driftc_phase(struct mlx90382_device *dev, float *angle);
-rt_err_t mlx90382_get_sc_phase(struct mlx90382_device *dev, float *angle);
-rt_err_t mlx90382_set_zero_position(struct mlx90382_device *dev, rt_uint16_t position);
-rt_err_t mlx90382_get_zero_position(struct mlx90382_device *dev, rt_uint16_t *position);
+rt_err_t mlx90384_soft_reset(struct mlx90384_device *dev);
+rt_err_t mlx90384_get_config(struct mlx90384_device *dev, union mlx90384_config_reg *config);
+rt_err_t mlx90384_set_sensing_mode(struct mlx90384_device *dev, rt_uint16_t mode);
+rt_err_t mlx90384_get_lin_phase(struct mlx90384_device *dev, float *angle);
+rt_err_t mlx90384_get_driftc_phase(struct mlx90384_device *dev, float *angle);
+rt_err_t mlx90384_get_sc_phase(struct mlx90384_device *dev, float *angle);
+rt_err_t mlx90384_set_zero_position(struct mlx90384_device *dev, rt_uint16_t position);
+rt_err_t mlx90384_get_zero_position(struct mlx90384_device *dev, rt_uint16_t *position);
 
 /**
  * This function gets the data of the temperature, unit: Centigrade
@@ -78,10 +78,10 @@ rt_err_t mlx90382_get_zero_position(struct mlx90382_device *dev, rt_uint16_t *po
  *
  * @return the reading status, RT_EOK represents  reading the data successfully.
  */
-rt_err_t mlx90382_get_temp(struct mlx90382_device *dev, float *temp);
-rt_err_t mlx90382_get_speed(struct mlx90382_device *dev, rt_int16_t *speed);
+rt_err_t mlx90384_get_temp(struct mlx90384_device *dev, float *temp);
+rt_err_t mlx90384_get_speed(struct mlx90384_device *dev, rt_int16_t *speed);
 
-rt_err_t mlx90382_get_analog_version(struct mlx90382_device *dev, rt_uint16_t *version);
-rt_err_t mlx90382_get_digital_version(struct mlx90382_device *dev, rt_uint16_t *version);
+rt_err_t mlx90384_get_analog_version(struct mlx90384_device *dev, rt_uint16_t *version);
+rt_err_t mlx90384_get_digital_version(struct mlx90384_device *dev, rt_uint16_t *version);
 
 #endif

@@ -23,7 +23,7 @@
 
 #define MLX90382_SPI_MAX_SPEED (10000 * 1000)
 
-static rt_err_t mlx90382_register_write(struct mlx90382_device *dev, rt_uint16_t reg, rt_uint16_t data)
+static rt_err_t mlx90382_register_write(struct mlx90384_device *dev, rt_uint16_t reg, rt_uint16_t data)
 {
     rt_int8_t res = 0;
 
@@ -76,7 +76,7 @@ static rt_err_t mlx90382_register_write(struct mlx90382_device *dev, rt_uint16_t
     return res;
 }
 
-static rt_err_t mlx90382_register_read(struct mlx90382_device *dev, rt_uint16_t reg, rt_uint8_t len, rt_uint8_t *buf)
+static rt_err_t mlx90382_register_read(struct mlx90384_device *dev, rt_uint16_t reg, rt_uint8_t len, rt_uint8_t *buf)
 {
     rt_int8_t res = 0;
 
@@ -114,7 +114,7 @@ static rt_err_t mlx90382_register_read(struct mlx90382_device *dev, rt_uint16_t 
     return res;
 }
 
-static rt_err_t mlx90382_frame_read(struct mlx90382_device *dev, rt_uint16_t reg, rt_uint8_t len, rt_uint8_t *buf)
+static rt_err_t mlx90382_frame_read(struct mlx90384_device *dev, rt_uint16_t reg, rt_uint8_t len, rt_uint8_t *buf)
 {
     rt_int8_t res = 0;
 
@@ -152,7 +152,7 @@ static rt_err_t mlx90382_frame_read(struct mlx90382_device *dev, rt_uint16_t reg
     return res;
 }
 
-rt_err_t mlx90382_soft_reset(struct mlx90382_device *dev)
+rt_err_t mlx90384_soft_reset(struct mlx90384_device *dev)
 {
     rt_err_t res=0;
 
@@ -161,12 +161,12 @@ rt_err_t mlx90382_soft_reset(struct mlx90382_device *dev)
     return res;
 }
 
-rt_err_t mlx90382_set_gpio_if(struct mlx90382_device *dev, rt_uint8_t val)
+rt_err_t mlx90382_set_gpio_if(struct mlx90384_device *dev, rt_uint8_t val)
 {
     rt_err_t res=0;
     rt_uint8_t buf[4];
 
-    union mlx90382_config_reg reg;
+    union mlx90384_config_reg reg;
 
     mlx90382_register_read(dev, MLX90384_CONFIG_REG, 4, buf);
 
@@ -179,7 +179,7 @@ rt_err_t mlx90382_set_gpio_if(struct mlx90382_device *dev, rt_uint8_t val)
     return res;
 }
 
-rt_err_t mlx90382_set_current_zero_angle(struct mlx90382_device *dev)
+rt_err_t mlx90382_set_current_zero_angle(struct mlx90384_device *dev)
 {
     rt_err_t res=0;
     float angle;
@@ -199,7 +199,7 @@ rt_err_t mlx90382_set_current_zero_angle(struct mlx90382_device *dev)
     return res;
 }
 
-rt_err_t mlx90382_set_zero_position(struct mlx90382_device *dev, rt_uint16_t position)
+rt_err_t mlx90384_set_zero_position(struct mlx90384_device *dev, rt_uint16_t position)
 {
     rt_err_t res = 0;
 
@@ -213,12 +213,12 @@ rt_err_t mlx90382_set_zero_position(struct mlx90382_device *dev, rt_uint16_t pos
     return res;
 }
 
-rt_err_t mlx90382_set_sensing_mode(struct mlx90382_device *dev, rt_uint16_t mode)
+rt_err_t mlx90384_set_sensing_mode(struct mlx90384_device *dev, rt_uint16_t mode)
 {
     rt_err_t res=0;
     rt_uint8_t buf[4];
 
-    union mlx90382_config_reg reg;
+    union mlx90384_config_reg reg;
 
     mlx90382_register_read(dev, MLX90384_CONFIG_REG, 4, buf);
 
@@ -231,7 +231,7 @@ rt_err_t mlx90382_set_sensing_mode(struct mlx90382_device *dev, rt_uint16_t mode
     return res;
 }
 
-rt_err_t mlx90382_get_zero_position(struct mlx90382_device *dev, rt_uint16_t *position)
+rt_err_t mlx90384_get_zero_position(struct mlx90384_device *dev, rt_uint16_t *position)
 {
     rt_err_t res = 0;
     rt_uint8_t buf[4];
@@ -248,7 +248,7 @@ rt_err_t mlx90382_get_zero_position(struct mlx90382_device *dev, rt_uint16_t *po
     return RT_EOK;
 }
 
-rt_err_t mlx90382_get_config(struct mlx90382_device *dev, union mlx90382_config_reg *config)
+rt_err_t mlx90384_get_config(struct mlx90384_device *dev, union mlx90384_config_reg *config)
 {
     rt_err_t res = 0;
     rt_uint8_t buf[4];
@@ -264,7 +264,7 @@ rt_err_t mlx90382_get_config(struct mlx90382_device *dev, union mlx90382_config_
     return RT_EOK;
 }
 
-rt_err_t mlx90382_get_lin_phase(struct mlx90382_device *dev, float *angle)
+rt_err_t mlx90384_get_lin_phase(struct mlx90384_device *dev, float *angle)
 {
     rt_err_t res = 0;
     rt_uint8_t buf[4];
@@ -285,7 +285,7 @@ rt_err_t mlx90382_get_lin_phase(struct mlx90382_device *dev, float *angle)
     return RT_EOK;
 }
 
-rt_err_t mlx90382_get_driftc_phase(struct mlx90382_device *dev, float *angle)
+rt_err_t mlx90384_get_driftc_phase(struct mlx90384_device *dev, float *angle)
 {
     rt_err_t res = 0;
     rt_uint8_t buf[4];
@@ -302,7 +302,7 @@ rt_err_t mlx90382_get_driftc_phase(struct mlx90382_device *dev, float *angle)
     return RT_EOK;
 }
 
-rt_err_t mlx90382_get_sc_phase(struct mlx90382_device *dev, float *pos)
+rt_err_t mlx90384_get_sc_phase(struct mlx90384_device *dev, float *pos)
 {
     rt_err_t res = 0;
     rt_uint8_t buf[4];
@@ -327,7 +327,7 @@ rt_err_t mlx90382_get_sc_phase(struct mlx90382_device *dev, float *pos)
  *
  * @return the reading status, RT_EOK represents  reading the data successfully.
  */
-rt_err_t mlx90382_get_temp(struct mlx90382_device *dev, float *temp)
+rt_err_t mlx90384_get_temp(struct mlx90384_device *dev, float *temp)
 {
     rt_err_t res = 0;
     rt_uint8_t buf[4];
@@ -345,7 +345,7 @@ rt_err_t mlx90382_get_temp(struct mlx90382_device *dev, float *temp)
     return RT_EOK;
 }
 
-rt_err_t mlx90382_get_speed(struct mlx90382_device *dev, rt_int16_t *speed)
+rt_err_t mlx90384_get_speed(struct mlx90384_device *dev, rt_int16_t *speed)
 {
     rt_err_t res = 0;
     rt_uint8_t buf[4];
@@ -363,7 +363,7 @@ rt_err_t mlx90382_get_speed(struct mlx90382_device *dev, rt_int16_t *speed)
     return RT_EOK;
 }
 
-rt_err_t mlx90382_get_analog_version(struct mlx90382_device *dev, rt_uint16_t *version)
+rt_err_t mlx90384_get_analog_version(struct mlx90384_device *dev, rt_uint16_t *version)
 {
     rt_err_t res = 0;
     rt_uint8_t buf[4];
@@ -379,7 +379,7 @@ rt_err_t mlx90382_get_analog_version(struct mlx90382_device *dev, rt_uint16_t *v
     return RT_EOK;
 }
 
-rt_err_t mlx90382_get_digital_version(struct mlx90382_device *dev, rt_uint16_t *version)
+rt_err_t mlx90384_get_digital_version(struct mlx90384_device *dev, rt_uint16_t *version)
 {
     rt_err_t res = 0;
     rt_uint8_t buf[4];
@@ -403,15 +403,15 @@ rt_err_t mlx90382_get_digital_version(struct mlx90382_device *dev, rt_uint16_t *
  *
  * @return the pointer of device driver structure, RT_NULL represents  initialization failed.
  */
-struct mlx90382_device *mlx90382_init(const char *dev_name, rt_uint8_t param)
+struct mlx90384_device *mlx90384_init(const char *dev_name, rt_uint8_t param)
 {
-    struct mlx90382_device *dev = RT_NULL;
+    struct mlx90384_device *dev = RT_NULL;
     rt_uint8_t reg[4];
     rt_uint8_t res = RT_EOK;
 
     RT_ASSERT(dev_name);
 
-    dev = rt_calloc(1, sizeof(struct mlx90382_device));
+    dev = rt_calloc(1, sizeof(struct mlx90384_device));
     if (dev == RT_NULL)
     {
         LOG_E("Can't allocate memory for mlx90382 device on '%s' ", dev_name);
@@ -478,7 +478,7 @@ struct mlx90382_device *mlx90382_init(const char *dev_name, rt_uint8_t param)
         LOG_W("REG[0x13E]: 0x%x 0x%x 0x%x 0x%x", reg[0], reg[1], reg[2], reg[3]);
     }
 
-    if (mlx90382_set_zero_position(dev, 20) != RT_EOK)
+    if (mlx90384_set_zero_position(dev, 20) != RT_EOK)
     {
         LOG_E("Failed to set zero angle!");
         goto __exit;
@@ -512,7 +512,7 @@ __exit:
  *
  * @param dev the pointer of device driver structure
  */
-void mlx90382_deinit(struct mlx90382_device *dev)
+void mlx90384_deinit(struct mlx90384_device *dev)
 {
     RT_ASSERT(dev);
 
@@ -521,7 +521,7 @@ void mlx90382_deinit(struct mlx90382_device *dev)
 
 static void mlx90382(int argc, char **argv)
 {
-    static struct mlx90382_device *dev = RT_NULL;
+    static struct mlx90384_device *dev = RT_NULL;
 
     /* If the number of arguments less than 2 */
     if (argc < 2)
@@ -539,15 +539,15 @@ static void mlx90382(int argc, char **argv)
     {
         if (dev)
         {
-            mlx90382_deinit(dev);
+            mlx90384_deinit(dev);
         }
 
         if (argc == 2)
         {
-            dev = mlx90382_init("spi10", RT_NULL);
+            dev = mlx90384_init("spi10", RT_NULL);
         }
         else
-            dev = mlx90382_init(argv[2], RT_NULL);
+            dev = mlx90384_init(argv[2], RT_NULL);
     }
     else if (!strcmp(argv[1], "angle"))
     {
@@ -567,11 +567,11 @@ static void mlx90382(int argc, char **argv)
 
         while (num --)
         {
-            mlx90382_get_lin_phase(dev, &angle_1);
-            mlx90382_get_driftc_phase(dev, &angle_2);
-            mlx90382_get_sc_phase(dev, &p);
-            mlx90382_get_temp(dev, &t);
-            mlx90382_get_speed(dev, &speed);
+            mlx90384_get_lin_phase(dev, &angle_1);
+            mlx90384_get_driftc_phase(dev, &angle_2);
+            mlx90384_get_sc_phase(dev, &p);
+            mlx90384_get_temp(dev, &t);
+            mlx90384_get_speed(dev, &speed);
             rt_kprintf("data:%d.%d,%d.%d,%d.%d,%d.%d,%d.%d\n", (int)(angle_1 * 100) / 100, (int)(angle_1 * 100) % 100,
                                                                (int)(angle_2 * 100) / 100, (int)(angle_2 * 100) % 100,
                                                                (int)(p * 100) / 100, (int)(p * 100) % 100,
@@ -590,19 +590,19 @@ static void mlx90382(int argc, char **argv)
             return ;
         }
 
-        mlx90382_get_temp(dev, &temp);
+        mlx90384_get_temp(dev, &temp);
         rt_kprintf("temp = %d.%d\n", (int)(temp * 100) / 100, (int)(temp * 100) % 100);
     }
     else if (!strcmp(argv[1], "config"))
     {
-        union mlx90382_config_reg config;
+        union mlx90384_config_reg config;
 
         if (dev == RT_NULL)
         {
             rt_kprintf("Please probe mlx90382 first!\n");
             return ;
         }
-        mlx90382_get_config(dev, &config);
+        mlx90384_get_config(dev, &config);
 
         rt_kprintf("config:%x\n", config.word_val);
     }

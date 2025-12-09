@@ -22,7 +22,7 @@ static rt_size_t mlx90382_fetch_data(struct rt_sensor_device *sensor, void *buf,
 {
     RT_ASSERT(buf);
 
-    mlx90382_get_lin_phase(mlx_dev, buf);
+    mlx90384_get_lin_phase(mlx_dev, buf);
 
     return 1;
 
@@ -42,7 +42,7 @@ rt_err_t mlx90382_get_info(rt_sensor_t sensor)
     rt_uint16_t d_ver_h;
     rt_uint32_t d_ver;
     rt_uint16_t zero_position;
-    union mlx90382_config_reg config;
+    union mlx90384_config_reg config;
 
     if (mlx_dev == RT_NULL)
     {
@@ -50,10 +50,10 @@ rt_err_t mlx90382_get_info(rt_sensor_t sensor)
         return -1;
     }
 
-    mlx90382_get_config(mlx_dev, &config);
-    mlx90382_get_zero_position(mlx_dev, &zero_position);
-    mlx90382_get_digital_version(mlx_dev, &d_ver_h);
-    mlx90382_get_analog_version(mlx_dev, &a_ver);
+    mlx90384_get_config(mlx_dev, &config);
+    mlx90384_get_zero_position(mlx_dev, &zero_position);
+    mlx90384_get_digital_version(mlx_dev, &d_ver_h);
+    mlx90384_get_analog_version(mlx_dev, &a_ver);
     d_ver = (a_ver>>8) + (d_ver_h<<16);
 
     rt_kprintf("aversion:%x\n", a_ver&0xFF);
@@ -86,31 +86,31 @@ static rt_err_t mlx90382_control(struct rt_sensor_device *sensor, int cmd, void 
         result = mlx90382_get_info(sensor);
         break;
     case RT_SENSOR_CTRL_USER_CMD_LIN_PHASE:
-        result = mlx90382_get_lin_phase(mlx_dev, (float *)args);
+        result = mlx90384_get_lin_phase(mlx_dev, (float *)args);
         break;
     case RT_SENSOR_CTRL_USER_CMD_DRIFTC_PHASE:
-        result = mlx90382_get_driftc_phase(mlx_dev, (float *)args);
+        result = mlx90384_get_driftc_phase(mlx_dev, (float *)args);
         break;
     case RT_SENSOR_CTRL_USER_CMD_SC_PHASE:
-        result = mlx90382_get_sc_phase(mlx_dev, (float *)args);
+        result = mlx90384_get_sc_phase(mlx_dev, (float *)args);
         break;
     case RT_SENSOR_CTRL_USER_CMD_SPEED:
-        result = mlx90382_get_speed(mlx_dev, (rt_int16_t *)args);
+        result = mlx90384_get_speed(mlx_dev, (rt_int16_t *)args);
         break;
     case RT_SENSOR_CTRL_USER_CMD_TEMP:
-        result = mlx90382_get_temp(mlx_dev, (float *)args);
+        result = mlx90384_get_temp(mlx_dev, (float *)args);
         break;
     case RT_SENSOR_CTRL_USER_CMD_SOFT_RESET:
-        result = mlx90382_soft_reset(mlx_dev);
+        result = mlx90384_soft_reset(mlx_dev);
         break;
     case RT_SENSOR_CTRL_USER_CMD_GET_ZEROPOSITION:
-        result = mlx90382_get_zero_position(mlx_dev, (rt_uint16_t *)args);
+        result = mlx90384_get_zero_position(mlx_dev, (rt_uint16_t *)args);
         break;
     case RT_SENSOR_CTRL_USER_CMD_SET_ZEROPOSITION:
-        result = mlx90382_set_zero_position(mlx_dev, *(rt_uint16_t *)args);
+        result = mlx90384_set_zero_position(mlx_dev, *(rt_uint16_t *)args);
         break;
     case RT_SENSOR_CTRL_USER_CMD_SET_SENSING_MODE:
-        result = mlx90382_set_sensing_mode(mlx_dev, *(rt_uint16_t *)args);
+        result = mlx90384_set_sensing_mode(mlx_dev, *(rt_uint16_t *)args);
         break;
     default:
         rt_kprintf("unknown MLX90382 CTRL CMD\r\n");
@@ -129,10 +129,10 @@ static struct rt_sensor_ops sensor_ops =
 int rt_hw_mlx90384_init(const char *name, struct rt_sensor_config *cfg)
 {
     rt_int8_t result;
-    struct mlx90382_device *mlx_dev_temp;
+    struct mlx90384_device *mlx_dev_temp;
     rt_sensor_t sensor_mag = RT_NULL;
 
-    mlx_dev_temp = mlx90382_init((&cfg->intf)->dev_name, RT_NULL);
+    mlx_dev_temp = mlx90384_init((&cfg->intf)->dev_name, RT_NULL);
 
     if (mlx_dev_temp == RT_NULL)
     {
@@ -174,7 +174,7 @@ mag__exit:
 
 __exit:
     if (mlx_dev_temp)
-        mlx90382_deinit(mlx_dev_temp);
+        mlx90384_deinit(mlx_dev_temp);
 
     return -RT_ERROR;
 }

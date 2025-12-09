@@ -17,11 +17,11 @@
 
 static int mlx90382_test(void)
 {
-    struct mlx90382_device *dev;
+    struct mlx90384_device *dev;
     float angle;
 
     /* Initialize MLX90382, The parameter is RT_NULL, means auto probing for SPI*/
-    dev = mlx90382_init(MLX90382_DEVICE_NAME, RT_NULL);
+    dev = mlx90384_init(MLX90382_DEVICE_NAME, RT_NULL);
 
     if (dev == RT_NULL)
     {
@@ -31,12 +31,12 @@ static int mlx90382_test(void)
 
     for (int i = 0; i < 5; i++)
     {
-        mlx90382_get_lin_phase(dev, &angle);
+        mlx90384_get_lin_phase(dev, &angle);
 
         rt_thread_mdelay(100);
     }
 
-    mlx90382_deinit(dev);
+    mlx90384_deinit(dev);
 
     return 0;
 }
