@@ -14,7 +14,9 @@
 #define MLX90384_DSP_BASE_ADDR              0x000
 #define MLX90384_NVRAM_BASE_ADDR            0x100
 
-#define MLX90384_CONFIG_REG                 (MLX90384_NVRAM_BASE_ADDR + 0x0)
+#define MLX90384_CONFIG_REG                 (MLX90384_NVRAM_BASE_ADDR + 0x00)
+#define MLX90384_PHASE_OFS                  (MLX90384_NVRAM_BASE_ADDR + 0x20)   //Phase/Angle offset before signal conditioning, resolution 360/216 deg (signed 2th-complement)
+#define MLX90384_PWM_PERIOD                 (MLX90384_NVRAM_BASE_ADDR + 0x2E)
 
 #define MLX90384_SOFT_RESET                 0x004
 #define MLX90384_TEMP                       0x03C
@@ -24,8 +26,6 @@
 #define MLX90384_SC_PHASE                   0x048   //Position value after signal conditioning
 #define MLX90384_GC_I                       0x04A   //Gain compensated I component
 #define MLX90384_GC_Q                       0x04E   //Gain compensated Q component
-
-#define MLX90384_PHASE_OFS                  0x120   //Phase/Angle offset before signal conditioning, resolution 360/216 deg (signed 2th-complement)
 
 #define MLX90384_ANA_VERSION                0x0EE
 #define MLX90384_DIG_VERSION                0x0F0
