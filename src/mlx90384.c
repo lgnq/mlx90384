@@ -430,7 +430,7 @@ struct mlx90384_device *mlx90384_init(const char *dev_name, rt_uint8_t param)
         struct rt_spi_configuration cfg;
 
         cfg.data_width = 8;
-        cfg.mode       = RT_SPI_MASTER | RT_SPI_MODE_2 | RT_SPI_MSB;  //RT_SPI_MODE_1 is not work well
+        cfg.mode       = RT_SPI_MASTER | RT_SPI_MODE_3 | RT_SPI_MSB;  //RT_SPI_MODE_1,2 is not work well
         cfg.max_hz     = MLX90384_SPI_MAX_SPEED; /* Set SPI max speed */
 
         rt_spi_configure((struct rt_spi_device *)dev->bus, &cfg);
