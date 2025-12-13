@@ -14,6 +14,8 @@
 #define DBG_LVL DBG_INFO
 #include <rtdbg.h>
 
+#include <stdlib.h>
+
 #define mlx_dev ((struct mlx90384_device *)sensor->parent.user_data)
 
 rt_uint16_t sample_freq = 100;
@@ -317,10 +319,13 @@ rt_err_t mlx90384_set_sample_freq(int argc, char **argv)
 
 rt_err_t mlx90384_ops_ctrl(int argc, char **argv)
 {
-    rt_size_t res = RT_EOK;
+    rt_size_t res   = RT_EOK;
     rt_device_t dev = RT_NULL;
 
-    rt_uint16_t p = atoi(argv[2]);
+    rt_uint16_t p = 0;
+
+    if (argc == 3)
+        p = atoi(argv[2]);
 
     dev = rt_device_find("mag_mps");
     if (dev == RT_NULL)
@@ -345,7 +350,7 @@ rt_err_t mlx90384_ops_ctrl(int argc, char **argv)
 
     if (rt_device_control(dev, atoi(argv[1]), &p))
     {
-        rt_kprintf("device control set failed, 0x%x 0x%x!\n", atoi(argv[1]), atoi(argv[2]));
+        rt_kprintf("device control set failed, 0x%x!\n", atoi(argv[1]));
         return -RT_ERROR;
     }
 
