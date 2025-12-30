@@ -15,6 +15,7 @@
 #include <rtdbg.h>
 
 #include <stdlib.h>
+#include <string.h>
 
 #define mlx_dev ((struct mlx90384_device *)sensor->parent.user_data)
 
