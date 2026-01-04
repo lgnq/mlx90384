@@ -14,6 +14,14 @@
 #include <rtthread.h>
 #include <stdint.h>
 
+enum MLX90384_CMD
+{
+    CMD_RR  = 0xCC,
+    CMD_RW  = 0x78,
+    CMD_FR  = 0x34,
+    CMD_SFR = 0xD0, 
+};
+
 union mlx90384_config_reg
 {
     rt_uint16_t word_val;

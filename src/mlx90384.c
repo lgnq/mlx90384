@@ -32,7 +32,7 @@ static rt_err_t mlx90384_register_write(struct mlx90384_device *dev, rt_uint16_t
 
     if (dev->bus->type == RT_Device_Class_SPIDevice)
     {
-        tmp[0] = 0x78 | (reg>>9);
+        tmp[0] = CMD_FR | (reg>>9);
         tmp[1] = (reg>>1) & 0xFF;
 
         dat[0] = (data&0xFF00)>>8;
@@ -48,14 +48,14 @@ static rt_err_t mlx90384_register_read(struct mlx90384_device *dev, rt_uint16_t 
 {
     rt_int8_t res = 0;
 
-    rt_uint8_t cmd_rr = 0xCC | (reg>>9);
-    rt_uint8_t addr   = (reg>>1) & 0xFF;
+    rt_uint8_t cmd  = CMD_RR | (reg>>9);
+    rt_uint8_t addr = (reg>>1) & 0xFF;
 
     if (dev->bus->type == RT_Device_Class_SPIDevice)
     {
         struct rt_spi_message msg1, msg2;
 
-        msg1.send_buf   = &cmd_rr;
+        msg1.send_buf   = &cmd;
         msg1.recv_buf   = RT_NULL;
         msg1.length     = 1;
         msg1.cs_take    = 1;
@@ -79,14 +79,14 @@ static rt_err_t mlx90384_frame_read(struct mlx90384_device *dev, rt_uint16_t reg
 {
     rt_int8_t res = 0;
 
-    rt_uint8_t cmd_rr = 0x03 | (reg>>9);
-    rt_uint8_t addr   = (reg>>1) & 0xFF;
+    rt_uint8_t cmd  = CMD_FR | (reg>>9);
+    rt_uint8_t addr = (reg>>1) & 0xFF;
 
     if (dev->bus->type == RT_Device_Class_SPIDevice)
     {
         struct rt_spi_message msg1, msg2;
 
-        msg1.send_buf   = &cmd_rr;
+        msg1.send_buf   = &cmd;
         msg1.recv_buf   = RT_NULL;
         msg1.length     = 1;
         msg1.cs_take    = 1;
