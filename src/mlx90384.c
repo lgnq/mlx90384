@@ -380,6 +380,26 @@ rt_err_t mlx90384_get_digital_version(struct mlx90384_device *dev, rt_uint16_t *
     return RT_EOK;
 }
 
+rt_err_t mlx90384_set_spi_faddr01(struct mlx90384_device *dev, rt_uint16_t faddr0, rt_uint16_t faddr1)
+{
+    rt_err_t res = 0;
+    rt_uint16_t faddr01 = (faddr1 << 8) | faddr0;
+
+    res = mlx90384_register_write(dev, MLX90384_SPI_FADDR0, faddr01);
+
+    return res;
+}
+
+rt_err_t mlx90384_set_spi_faddr23(struct mlx90384_device *dev, rt_uint16_t faddr2, rt_uint16_t faddr3)
+{
+    rt_err_t res = 0;
+    rt_uint16_t faddr23 = (faddr3 << 8) | faddr2;
+
+    res = mlx90384_register_write(dev, MLX90384_SPI_FADDR2, faddr23);
+    
+    return res;
+}
+
 /**
  * This function initialize the mlx90384 device.
  *

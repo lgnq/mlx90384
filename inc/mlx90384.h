@@ -92,4 +92,7 @@ rt_err_t mlx90384_get_speed(struct mlx90384_device *dev, rt_int16_t *speed);
 rt_err_t mlx90384_get_analog_version(struct mlx90384_device *dev, rt_uint16_t *version);
 rt_err_t mlx90384_get_digital_version(struct mlx90384_device *dev, rt_uint16_t *version);
 
+rt_err_t mlx90384_set_spi_faddr01(struct mlx90384_device *dev, rt_uint16_t faddr0, rt_uint16_t faddr1);
+rt_err_t mlx90384_set_spi_faddr23(struct mlx90384_device *dev, rt_uint16_t faddr2, rt_uint16_t faddr3);
+
 #endif
