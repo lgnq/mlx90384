@@ -106,6 +106,37 @@ static rt_err_t mlx90384_frame_read(struct mlx90384_device *dev, rt_uint16_t reg
     return res;
 }
 
+static rt_err_t mlx90384_super_frame_read(struct mlx90384_device *dev, rt_uint16_t reg, rt_uint8_t len, rt_uint8_t *buf)
+{
+    rt_int8_t res = 0;
+
+    rt_uint8_t cmd  = CMD_SFR | (reg>>9);
+    rt_uint8_t addr = (reg>>1) & 0xFF;
+
+    if (dev->bus->type == RT_Device_Class_SPIDevice)
+    {
+        struct rt_spi_message msg1, msg2;
+
+        msg1.send_buf   = &cmd;
+        msg1.recv_buf   = RT_NULL;
+        msg1.length     = 1;
+        msg1.cs_take    = 1;
+        msg1.cs_release = 0;
+        msg1.next       = &msg2;
+
+        msg2.send_buf   = &addr;
+        msg2.recv_buf   = buf;
+        msg2.length     = len;
+        msg2.cs_take    = 0;
+        msg2.cs_release = 1;
+        msg2.next       = RT_NULL;
+
+        rt_spi_transfer_message((struct rt_spi_device *)dev->bus, &msg1);
+    }
+
+    return res;
+}
+
 rt_err_t mlx90384_soft_reset(struct mlx90384_device *dev)
 {
     rt_err_t res=0;
