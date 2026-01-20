@@ -20,6 +20,8 @@
 #define MLX90384_CONFIG_REG                 (MLX90384_NVRAM_BASE_ADDR + 0x00)
 #define MLX90384_PHASE_OFS                  (MLX90384_NVRAM_BASE_ADDR + 0x20)   //Phase/Angle offset before signal conditioning, resolution 360/216 deg (signed 2th-complement)
 #define MLX90384_PWM_PERIOD                 (MLX90384_NVRAM_BASE_ADDR + 0x2E)
+#define MLX90384_SPI_FADDR0                 (MLX90384_NVRAM_BASE_ADDR + 0x30)
+#define MLX90384_SPI_FADDR2                 (MLX90384_NVRAM_BASE_ADDR + 0x32)
 
 #define MLX90384_SOFT_RESET                 0x004
 #define MLX90384_TEMP                       0x03C
@@ -39,6 +41,8 @@
 #define MLX90384_CONFIG_REG                 (MLX90384_NVRAM_BASE_ADDR + 0x00)
 #define MLX90384_PHASE_OFS                  (MLX90384_NVRAM_BASE_ADDR + 0x20)   //Phase/Angle offset before signal conditioning, resolution 360/216 deg (signed 2th-complement)
 #define MLX90384_PWM_PERIOD                 (MLX90384_NVRAM_BASE_ADDR + 0x2E)
+#define MLX90384_SPI_FADDR0                 (MLX90384_NVRAM_BASE_ADDR + 0x30)
+#define MLX90384_SPI_FADDR2                 (MLX90384_NVRAM_BASE_ADDR + 0x32)
 
 #define MLX90384_SOFT_RESET                 0x004
 #define MLX90384_TEMP                       0x03C
@@ -58,6 +62,8 @@
 #define MLX90384_CONFIG_REG                 (MLX90384_NVRAM_BASE_ADDR + 0x00)
 #define MLX90384_PHASE_OFS                  (MLX90384_NVRAM_BASE_ADDR + 0x20)   //Phase/Angle offset before signal conditioning, resolution 360/216 deg (signed 2th-complement)
 #define MLX90384_PWM_PERIOD                 (MLX90384_NVRAM_BASE_ADDR + 0x2E)
+#define MLX90384_SPI_FADDR0                 (MLX90384_NVRAM_BASE_ADDR + 0x30)
+#define MLX90384_SPI_FADDR2                 (MLX90384_NVRAM_BASE_ADDR + 0x32)
 
 #define MLX90384_SOFT_RESET                 0x004
 #define MLX90384_TEMP                       0x038
