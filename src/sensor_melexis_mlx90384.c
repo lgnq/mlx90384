@@ -190,7 +190,7 @@ static void read_mps_entry(void *parameter)
     float lin_phase;
     float driftc_phase;
     float sc_phase;
-    rt_int16_t speed;
+    float speed;
     float temp;
 
     dev = rt_device_find(parameter);
@@ -260,7 +260,7 @@ static void read_mps_entry(void *parameter)
         rt_kprintf("data:%d.%d,%d.%d,%d.%d,%d.%d,%d.%d\n", (int)(lin_phase * 100) / 100, (int)(lin_phase * 100) % 100,
                                                            (int)(driftc_phase * 100) / 100, (int)(driftc_phase * 100) % 100,
                                                            (int)(sc_phase * 100) / 100, (int)(sc_phase * 100) % 100,
-                                                           (int)(speed * 100) / 100, (int)((float)speed * 100) % 100,
+                                                           (int)(speed * 100) / 100, (int)(speed * 100) % 100,
                                                            (int)((float)temp * 100) / 100, (int)(temp * 100) % 100);
 
         rt_thread_mdelay(sample_freq);
