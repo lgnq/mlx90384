@@ -17,9 +17,24 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "drv_gpio.h" 
+#include "drv_spi.h"
+
 #define mlx_dev ((struct mlx90384_device *)sensor->parent.user_data)
 
 rt_uint16_t sample_freq = 100;
+
+#define MLX90384_CS0_PIN  (GET_PIN(A, 3))
+#define MLX90384_CS1_PIN  (GET_PIN(A, 4))
+
+// 自动初始化实现SPI设备挂载
+int mlx90384_spi_device_init(void)
+{
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+
+    return rt_hw_spi_device_attach("spi1", "spi10", MLX90384_CS0_PIN);
+}
+INIT_DEVICE_EXPORT(mlx90384_spi_device_init);
 
 static rt_size_t mlx90384_fetch_data(struct rt_sensor_device *sensor, void *buf, rt_size_t len)
 {
