@@ -30,9 +30,25 @@ rt_uint16_t sample_freq = 100;
 // 自动初始化实现SPI设备挂载
 int mlx90384_spi_device_init(void)
 {
+    rt_err_t result = RT_EOK;
+
     __HAL_RCC_GPIOA_CLK_ENABLE();
 
-    return rt_hw_spi_device_attach("spi1", "spi10", MLX90384_CS0_PIN);
+    result = rt_hw_spi_device_attach("spi1", "spi10", MLX90384_CS0_PIN);
+    if (result != RT_EOK)
+    {
+        LOG_E("spi10 device attach failed, %d\n", result);
+        return -RT_ERROR;
+    }
+
+    result = rt_hw_spi_device_attach("spi1", "spi11", MLX90384_CS1_PIN);
+    if (result != RT_EOK)
+    {
+        LOG_E("spi11 device attach failed, %d\n", result);
+        return -RT_ERROR;
+    }
+
+    return result;
 }
 INIT_DEVICE_EXPORT(mlx90384_spi_device_init);
 
@@ -287,8 +303,10 @@ int rt_hw_mlx90384_port(void)
     struct rt_sensor_config cfg;
 
     cfg.intf.dev_name  = "spi10";
+    rt_hw_mlx90384_init("mps0", &cfg);
 
-    rt_hw_mlx90384_init("mps", &cfg);
+    cfg.intf.dev_name  = "spi11";
+    rt_hw_mlx90384_init("mps1", &cfg);
 
     return 0;
 }
